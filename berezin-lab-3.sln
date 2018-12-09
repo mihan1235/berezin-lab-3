@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28306.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "berezin-lab-3", "berezin-lab-3\berezin-lab-3.csproj", "{5E23D332-53F1-451E-97DB-75D55CCEF73B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecognizeClient", "RecognizeClient\RecognizeClient.csproj", "{024501EB-00E3-46A0-A9C1-0EC71B4F9451}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs", "Libs\Libs.csproj", "{809E6BB5-1927-4C64-9F83-260E00A27E69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{5E23D332-53F1-451E-97DB-75D55CCEF73B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E23D332-53F1-451E-97DB-75D55CCEF73B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E23D332-53F1-451E-97DB-75D55CCEF73B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{024501EB-00E3-46A0-A9C1-0EC71B4F9451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{024501EB-00E3-46A0-A9C1-0EC71B4F9451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{024501EB-00E3-46A0-A9C1-0EC71B4F9451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{024501EB-00E3-46A0-A9C1-0EC71B4F9451}.Release|Any CPU.Build.0 = Release|Any CPU
+		{809E6BB5-1927-4C64-9F83-260E00A27E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{809E6BB5-1927-4C64-9F83-260E00A27E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{809E6BB5-1927-4C64-9F83-260E00A27E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{809E6BB5-1927-4C64-9F83-260E00A27E69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
