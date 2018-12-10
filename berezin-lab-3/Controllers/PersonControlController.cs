@@ -12,16 +12,16 @@ namespace berezin_lab_3.Controllers
 {
     public class PersonControlController : ApiController
     {
-        
+        public static DataBase db { get; } = new DataBase();
         // GET api/<controller>
-        //[Route("api/PersonControls")]
+        [Route("api/PersonControls")]
         public IEnumerable<PersonControlData> Get()
         {
              return db.PersonControlDatas.ToArray();
         }
 
         // GET api/<controller>/5
-        //[Route("api/PersonControls/{id}")]
+        [Route("api/PersonControls/{id}")]
         public PersonControlData Get(int id)
         {
             PersonControlData obj = db.PersonControlDatas.FirstOrDefault(p => p.Id == id);
@@ -29,6 +29,7 @@ namespace berezin_lab_3.Controllers
         }
 
         // POST api/<controller>
+        [Route("api/PersonControls")]
         public int Post([FromBody]PersonControlData obj)
         {
             db.PersonControlDatas.Add(obj);
@@ -42,6 +43,7 @@ namespace berezin_lab_3.Controllers
         //}
 
         // DELETE api/<controller>/5
+        [Route("api/PersonControls/{id}")]
         public void Delete(int id)
         {
             PersonControlData obj = db.PersonControlDatas.FirstOrDefault(p => p.Id == id);
