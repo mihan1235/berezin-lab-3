@@ -6,7 +6,79 @@
         xmlns:local="clr-namespace:RecognizeClient"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open"
+                        Executed="OpenImages"
+                        CanExecute="CanOpenImage"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Save"
+                        Executed="SaveImage"
+                        CanExecute="CanSaveImage"></CommandBinding>
+        <CommandBinding Command="local:CustomCommands.DetectFaces"
+                        Executed="DetectFacesAsync"
+                        CanExecute="CanDetectFaces"></CommandBinding>
+        <CommandBinding Command="local:CustomCommands.Cancel"
+                        Executed="CancelTasks"
+                        CanExecute="CanCancelTasks"></CommandBinding>
+        <CommandBinding Command="local:CustomCommands.ClearDataBase"
+                        Executed="ClearDataBase"
+                        CanExecute="CanClearDataBase"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Delete"
+                        Executed="RemoveObj"
+                        CanExecute="CanRemoveObj"></CommandBinding>
+    </Window.CommandBindings>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="297*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="80*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.ColumnSpan="3">
+            <MenuItem Header="File">
+                <MenuItem Header="Add images"
+                          Command="ApplicationCommands.Open"></MenuItem>
+                <MenuItem Header="Save selected image"
+                          Command="ApplicationCommands.Save"></MenuItem>
+                <MenuItem Header="Clear"
+                          Command="local:CustomCommands.ClearDataBase"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Detect images">
+                <MenuItem Header="Detect"
+                          Command="local:CustomCommands.DetectFaces"></MenuItem>
+                <MenuItem Header="Cancel detection process"
+                      Command="local:CustomCommands.Cancel">
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <Viewbox MinHeight="600" Grid.Column="0" Grid.Row="1">
+            <Grid Name ="cs" >
+                <Image Name="ImageObject"
+                       VerticalAlignment="Top"
+                       Source="{Binding ElementName=PersonListBox, Path=SelectedItem.Source, Mode=OneWay}"></Image>
+                <Canvas Name="ObjectField" >
+
+                </Canvas>
+            </Grid>
+        </Viewbox>
+        <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" 
+                      HorizontalAlignment="Center" Width="5"
+                      Grid.RowSpan="2"></GridSplitter>
+        <ListBox Name="PersonListBox"
+                 Grid.Row="1"
+                 Grid.Column="2"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 SelectionChanged="SelectedPersonControlEvent"
+                 >
+            <ListBox.ContextMenu>
+                <ContextMenu >
+                    <MenuItem Header="Remove" 
+                              Command="ApplicationCommands.Delete"></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
     </Grid>
 </Window>
