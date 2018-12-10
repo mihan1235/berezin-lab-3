@@ -23,6 +23,8 @@ namespace RecognizeClient
     using System.IO;
     using System.Collections.ObjectModel;
     using System.Threading;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
 
 
     /// <summary>
@@ -30,18 +32,26 @@ namespace RecognizeClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        DataBase db = new DataBase();
+        //DataBase db = new DataBase();
+        static HttpClient client = new HttpClient();
         public MainWindow()
         {
             InitializeComponent();
-            foreach (PersonControlData obj in db.PersonControlDatas)
-            {
-                PersonControl pc = new PersonControl();
-                pc.Data = obj;
-                persons_list.Add(pc);
-                //MessageBox.Show(pc.ToString());
-            }
-            PersonListBox.ItemsSource = persons_list;
+            client.BaseAddress = new Uri("http://localhost:50777/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            //HttpResponseMessage response = client.GetAsync("api/PersonControl").Result;
+            //IEnumerable<PersonControlData> PersonControlDatas =
+            //        response.Content.ReadAsAsync<IEnumerable<PersonControlData>>().Result;
+            //foreach (PersonControlData obj in PersonControlDatas)
+            //{
+            //    PersonControl pc = new PersonControl();
+            //    pc.Data = obj;
+            //    persons_list.Add(pc);
+            //    //MessageBox.Show(pc.ToString());
+            //}
+            //PersonListBox.ItemsSource = persons_list;
         }
 
         private void CanSaveImage(object sender, CanExecuteRoutedEventArgs e)
@@ -213,13 +223,13 @@ namespace RecognizeClient
                         person_control.PersonsList = PersonsList;
                         person_control.DetectedNum = PersonsList.Count;
                         person_control.Result = true;
-                        using (DataBase db = new DataBase())
-                        {
-                            var data = person_control.Data;
-                            db.PersonControlDatas.Add(data);
-                            db.SaveChanges();
-                            person_control.Id = data.Id;
-                        }
+                        //using (DataBase db = new DataBase())
+                        //{
+                        var data = person_control.Data;
+                        HttpResponseMessage response = await client.PostAsJsonAsync("api/PersonControl", data);
+                        response.EnsureSuccessStatusCode();
+                        person_control.Id = await response.Content.ReadAsAsync<int>();
+                        //}
                     }
                     person_control.ProgressBar.Visibility = Visibility.Collapsed;
                     if ((persons_list.IndexOf(person_control) == PersonListBox.SelectedIndex) &&
@@ -271,24 +281,12 @@ namespace RecognizeClient
             }
         }
 
-        private void RemoveFromDataBase(int id)
+        private async void RemoveFromDataBase(int id)
         {
             if (id != -1)
             {
-
-                PersonControlData obj = db.PersonControlDatas.FirstOrDefault(p => p.Id == id);
-                db.PersonControlDatas.Attach(obj);
-                if (obj.PersonsList != null)
-                    foreach (var child in obj.PersonsList.ToList())
-                    {
-                        db.Entry(child.faceAttributes).State = EntityState.Deleted;
-                        db.Entry(child.faceRectangle).State = EntityState.Deleted;
-                        db.Entry(child).State = EntityState.Deleted;
-                    }
-                if (obj.ErrorResult != null)
-                    db.Entry(obj.ErrorResult).State = EntityState.Deleted;
-                db.PersonControlDatas.Remove(obj);
-                db.SaveChanges();
+                HttpResponseMessage response = await client.DeleteAsync($"api/PersonControl/{id}");
+                //return response.StatusCode;
             }
         }
 
