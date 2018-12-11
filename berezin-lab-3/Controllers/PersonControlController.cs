@@ -30,7 +30,7 @@ namespace berezin_lab_3.Controllers
 
         // POST api/<controller>
         //[Route("api/PersonControls")]
-        public int Post([FromBody]PersonControlData obj)
+        public int Post(PersonControlData obj)
         {
             db.PersonControlDatas.Add(obj);
             db.SaveChanges();

@@ -41,17 +41,17 @@ namespace RecognizeClient
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-            //HttpResponseMessage response = client.GetAsync("api/PersonControl").Result;
-            //IEnumerable<PersonControlData> PersonControlDatas =
-            //        response.Content.ReadAsAsync<IEnumerable<PersonControlData>>().Result;
-            //foreach (PersonControlData obj in PersonControlDatas)
-            //{
-            //    PersonControl pc = new PersonControl();
-            //    pc.Data = obj;
-            //    persons_list.Add(pc);
-            //    //MessageBox.Show(pc.ToString());
-            //}
-            //PersonListBox.ItemsSource = persons_list;
+            HttpResponseMessage response = client.GetAsync("api/PersonControl").Result;
+            IEnumerable<PersonControlData> PersonControlDatas =
+                    response.Content.ReadAsAsync<IEnumerable<PersonControlData>>().Result;
+            foreach (PersonControlData obj in PersonControlDatas)
+            {
+                PersonControl pc = new PersonControl();
+                pc.Data = obj;
+                persons_list.Add(pc);
+                //MessageBox.Show(pc.ToString());
+            }
+            PersonListBox.ItemsSource = persons_list;
         }
 
         private void CanSaveImage(object sender, CanExecuteRoutedEventArgs e)
